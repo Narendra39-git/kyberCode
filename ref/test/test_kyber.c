@@ -43,7 +43,7 @@ static int test_keys(void)
 
     printf("KeyGen Time: %f sec | Enc Time: %f sec | Dec Time: %f sec\n", keygen_time, enc_time, dec_time);
 
-    return 0;
+    return keygen_time, enc_time, dec_time;
 }
 
 int main(void)
@@ -51,12 +51,37 @@ int main(void)
     unsigned int i;
     int r;
 
+    double total_keygen_time = 0.0;
+    double total_enc_time = 0.0;
+    double total_dec_time = 0.0;
+
     printf("Running %d tests...\n", NTESTS);
     
     for (i = 0; i < NTESTS; i++) {
         r = test_keys();
         if (r) return 1;
     }
+
+    // Calculate total time for all tests
+    total_keygen_time += keygen_time;
+    total_enc_time += enc_time;
+    total_dec_time += dec_time;
+
+    // Calculate average time for each operation
+    double avg_keygen_time = total_keygen_time / NTESTS;
+    double avg_enc_time = total_enc_time / NTESTS;
+    double avg_dec_time = total_dec_time / NTESTS;
+
+    // Print the total and average times
+    printf("\nTotal time for %d tests:\n", NTESTS);
+    printf("Total KeyGen Time: %f sec\n", total_keygen_time);
+    printf("Total Encapsulation Time: %f sec\n", total_enc_time);
+    printf("Total Decapsulation Time: %f sec\n", total_dec_time);
+
+    printf("\nAverage time per operation:\n");
+    printf("Average KeyGen Time: %f sec\n", avg_keygen_time);
+    printf("Average Encapsulation Time: %f sec\n", avg_enc_time);
+    printf("Average Decapsulation Time: %f sec\n", avg_dec_time);
 
     printf("CRYPTO_SECRETKEYBYTES:  %d\n", CRYPTO_SECRETKEYBYTES);
     printf("CRYPTO_PUBLICKEYBYTES:  %d\n", CRYPTO_PUBLICKEYBYTES);
