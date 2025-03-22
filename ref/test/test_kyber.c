@@ -5,7 +5,7 @@
 #include "../randombytes.h"
 #include <time.h>
 
-#define NTESTS 2
+#define NTESTS 50
 
 static int test_keys(void)
 {
