@@ -36,12 +36,27 @@ static int test_keys(void)
     end = clock();
     dec_time = (double)(end - start) / CLOCKS_PER_SEC;
 
+    // Check if the keys match
     if (memcmp(key_a, key_b, CRYPTO_BYTES)) {
         printf("ERROR keys\n");
         return 1;
     }
 
+    // Print timing information
     printf("KeyGen Time: %f sec | Enc Time: %f sec | Dec Time: %f sec\n", keygen_time, enc_time, dec_time);
+
+    // Print the ciphertext and shared secret key
+    printf("Ciphertext: ");
+    for (size_t i = 0; i < CRYPTO_CIPHERTEXTBYTES; i++) {
+        printf("%02x", ct[i]);
+    }
+    printf("\n");
+
+    printf("Decapsulated Key (Plaintext): ");
+    for (size_t i = 0; i < CRYPTO_BYTES; i++) {
+        printf("%02x", key_a[i]);
+    }
+    printf("\n");
 
     return 0;
 }
